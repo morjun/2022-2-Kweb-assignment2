@@ -8,7 +8,7 @@ CREATE TABLE `users` (
 `nickname` VARCHAR(16) NOT NULL,
 `profile_pic` VARCHAR(100) NOT NULL,
 `status_message` VARCHAR(100) NOT NULL,
-`leaved` TINYINT NOT NULL DEFAULT 0,
+`leaved` TINYINT(1) NOT NULL DEFAULT 0,
 `admission_date` DATETIME NOT NULL,
 PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -19,7 +19,7 @@ CREATE TABLE `channels` (
 `creater` INT NOT NULL,
 `link` VARCHAR(100) NOT NULL,
 `max_user` INT NOT NULL,
-`leaved` TINYINT NOT NULL DEFAULT 0,
+`leaved` TINYINT(1) NOT NULL DEFAULT 0,
 `creation_date` DATETIME NOT NULL,
 PRIMARY KEY (`id`),
 FOREIGN KEY (`creater`) REFERENCES `users`(`id`) ON DELETE CASCADE
@@ -43,7 +43,7 @@ CREATE TABLE `follows` (
 `follow_date` DATETIME NOT NULL,
 PRIMARY KEY (`id`),
 FOREIGN KEY (`follower`) REFERENCES `users`(`id`) ON DELETE CASCADE,
-FOREIGN KEY (`followee`) REFERENCES `users`(`id`) ON DELETE CASCADE,
+FOREIGN KEY (`followee`) REFERENCES `users`(`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `blocks` (
@@ -53,5 +53,5 @@ CREATE TABLE `blocks` (
 `block_date` DATETIME NOT NULL,
 PRIMARY KEY (`id`),
 FOREIGN KEY (`blocker`) REFERENCES `users`(`id`) ON DELETE CASCADE,
-FOREIGN KEY (`blocked`) REFERENCES `users`(`id`) ON DELETE CASCADE,
+FOREIGN KEY (`blocked`) REFERENCES `users`(`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
