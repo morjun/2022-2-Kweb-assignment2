@@ -1,0 +1,57 @@
+-- create database `messenger`
+-- use `messenger`
+
+CREATE TABLE `users` (
+`id` INT NOT NULL AUTO_INCREMENT,
+`username` VARCHAR(20) NOT NULL,
+`password` VARCHAR(32) NOT NULL,
+`nickname` VARCHAR(16) NOT NULL,
+`profile_pic` VARCHAR(100) NOT NULL,
+`status_message` VARCHAR(100) NOT NULL,
+`leaved` TINYINT NOT NULL DEFAULT 0,
+`admission_date` DATETIME NOT NULL,
+PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `channels` (
+`id` INT NOT NULL AUTO_INCREMENT,
+`name` VARCHAR(20) NOT NULL,
+`creater` INT NOT NULL,
+`link` VARCHAR(100) NOT NULL,
+`max_user` INT NOT NULL,
+`leaved` TINYINT NOT NULL DEFAULT 0,
+`creation_date` DATETIME NOT NULL,
+PRIMARY KEY (`id`),
+FOREIGN KEY (`creater`) REFERENCES `users`(`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `chats` (
+`id` INT NOT NULL AUTO_INCREMENT,
+`sender` INT NOT NULL,
+`message` VARCHAR(1024) NOT NULL,
+`channel` INT NOT NULL,
+`creation_date` DATETIME NOT NULL,
+PRIMARY KEY (`id`),
+FOREIGN KEY (`sender`) REFERENCES `users`(`id`) ON DELETE CASCADE,
+FOREIGN KEY (`channel`) REFERENCES `channels`(`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `follows` (
+`id` INT NOT NULL AUTO_INCREMENT,
+`follower` INT NOT NULL,
+`followee` INT NOT NULL,
+`follow_date` DATETIME NOT NULL,
+PRIMARY KEY (`id`),
+FOREIGN KEY (`follower`) REFERENCES `users`(`id`) ON DELETE CASCADE,
+FOREIGN KEY (`followee`) REFERENCES `users`(`id`) ON DELETE CASCADE,
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `blocks` (
+`id` INT NOT NULL AUTO_INCREMENT,
+`blocker` INT NOT NULL,
+`blocked` INT NOT NULL,
+`block_date` DATETIME NOT NULL,
+PRIMARY KEY (`id`),
+FOREIGN KEY (`blocker`) REFERENCES `users`(`id`) ON DELETE CASCADE,
+FOREIGN KEY (`blocked`) REFERENCES `users`(`id`) ON DELETE CASCADE,
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
