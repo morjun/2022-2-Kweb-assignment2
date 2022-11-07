@@ -1,0 +1,1 @@
+select users.id, users.name, tickets.seat_number from users inner join tickets on users.id = tickets.user and tickets.train=11 order by tickets.seat_number;

@@ -1,0 +1,2 @@
+select types.name, src_stn.name, dst_stn.name, trains.departure, trains.arrival, round(trains.distance*(types.fare_rate/1000),-2) as fare
+ from trains inner join types on trains.type = types.id inner join stations as src_stn on trains.source = src_stn.id inner join stations as dst_stn on trains.destination = dst_stn.id order by trains.departure;

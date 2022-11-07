@@ -1,0 +1,2 @@
+select trains.id, types.name, src_stn.name, dst_stn.name, count(*) as occupied, types.max_seats as maximum from
+trains inner join types on trains.type = types.id inner join stations as src_stn on trains.source = src_stn.id inner join stations as dst_stn on trains.destination = dst_stn.id inner join tickets on trains.id = tickets.train group by trains.id order by trains.id;

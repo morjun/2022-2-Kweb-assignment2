@@ -1,0 +1,2 @@
+select users.id, users.name, count(*) as train_count, (sum(trains.distance))/10 as total_distance from users inner join tickets on users.id = tickets.user inner join trains
+ on tickets.train = trains.id group by users.id, users.id order by total_distance desc limit 6;
